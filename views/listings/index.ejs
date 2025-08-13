@@ -1,4 +1,4 @@
-<!--aim: ejecting allListings in index.ejs  Step-- 5  -->
+<!--aim: ejecting allListings in index.ejs, this page contains images and links  (Step-- 5)  -->
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -8,10 +8,19 @@
   </head>
   <body>
     <h3>ALL Listings</h3>
+    <!-- step-7 aim: creating new listing by user and jo detail aya uska link ko main page per display krna.-->
+    <form method="Get" action="/listings/new"> 
+        <button>Create New Listing</button>   
+    </form>
+    <!--
+      click on url "/listings/new" -> app.js -> routes/listing.js or fir woha seh ak page render ho jayaga. 
+    -->
+    <!---->
+
     <div class="row row-col-lg-3">
       <% for(let listing of allListings) { %>
       <div class="card listing-card" style="width: 18rem">
-        <a href="/listings/<%= listing._id %>" class="listing-link">
+        <a href="/listings/<%= listing._id %>" class="listing-link"> <!-- it will triger a route in routes/listing.js -->
           <img
             src="<%= listing.image.url %>"
             class="card-img-top"

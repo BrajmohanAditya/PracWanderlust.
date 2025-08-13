@@ -26,11 +26,12 @@ async function main(){
 
 //aim: ejecting allListings in index.ejs   (step -- 5)
 app.set("view engine", "ejs"); 
-app.set("views", path.join(__dirname, "views"));
+app.set("views", path.join(__dirname, "views")); // //  sets the folder where Express should look for .ejs files.
+app.use(express.urlencoded({ extended: true }));   
 //---
 
 app.get("/", (req, res) => {
-  res.send("Hi, I am root");
+  res.redirect("/listings"); // "/listings"  "Hi, I am root"
 });
 
 //jo ve request "/listings" url per ayaga redirect it to listingsRoute  (step -- 5)

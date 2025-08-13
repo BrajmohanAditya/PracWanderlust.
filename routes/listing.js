@@ -15,4 +15,22 @@ router.get(
 //---
 
 
+// step - 7 aim: creating new listing by user and jo detail aya uska link ko main page per display krna. 
+router.get("/new", (req, res) => {
+  res.render("listings/new.ejs");
+});
+//---
+
+
+//step - 6.     aim: after clicking on anker tag in views/listings/index.ejs. it should show detail of that image.     
+router.get("/:id", async(req, res)=>{// Matching ke time  path ka pattern same hai ya nahi yahi check hota hai.
+  let { id } = req.params; // req.params se URL ke :id ka value nikala ja raha hai.
+  const listing = await Listing.findById(id);   // Listing :- ya DB hai, listing:- ak single listing hai
+  res.render("listings/show.ejs", { listing }); // 
+});
+//---
+
+
+
+
 module.exports = router;

@@ -1,0 +1,29 @@
+<!-- step - 6 : Show details of every individual listing-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h3 style="margin-left: 2rem"><%= listing.title%></h3>
+    <div class="card col-6 show-card listing-card">
+      <img
+        src="<%= listing.image.url%>"
+        class="card-img-top show-img"
+        alt="listing_image"
+      />
+      <div class="card-body">
+        <p class="card-text">
+          <%= listing.description%> <br />
+          &#8377;<%= listing.price ? listing.price.toLocaleString("en-IN") :
+          "Price Not Available" %> <br />
+          <%= listing.location%> <br />
+          <%= listing.country%>
+        </p>
+      </div>
+    </div>
+</body>
+</html>
