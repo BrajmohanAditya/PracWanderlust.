@@ -10,6 +10,11 @@ const path = require("path");
 const listingsRoute = require("./routes/listing.js");
 //---
 
+// step: 8,  we cannot send PUT request in form, so use metovhoderide
+const methodOverride = require("method-override"); // 
+app.use(methodOverride("_method"));
+//---
+
 
 // Establishing connection to Data base ---> (Step-2)
 const MONGO_URL = "mongodb://127.0.0.1:27017/PracWonderlust";  
@@ -22,7 +27,10 @@ main().then(()=>{    //  calling main method
 async function main(){   
    await mongoose.connect(MONGO_URL); 
 }
-//***
+/*
+ step-5: local host meh jao or (http://localhost:8080/listings) ya type karo . you will get image and title. 
+*/
+
 
 //aim: ejecting allListings in index.ejs   (step -- 5)
 app.set("view engine", "ejs"); 

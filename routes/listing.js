@@ -8,7 +8,7 @@ const Listing = require("../models/listing.js");
 router.get(     
   "/", // if you call this url "/listings" ya necha wala step perform karega, common parts have been removed. 
   async (req, res) => {
-    const allListings = await Listing.find({}); // database se saare listings allListings meh load ho gaya
+    const allListings = await Listing.find({}); // DB se saare listings allListings meh load ho gaya
     res.render("listings/index.ejs", { allListings }); // ejecting allListings in .ejs and render kr dega. 
   }
 );
@@ -31,6 +31,46 @@ router.get("/:id", async(req, res)=>{// Matching ke time  path ka pattern same h
 //---
 
 
+// step - 7 aim:  jo detail aya form(listings/new.ejs) k url (action="/listings") seh , save it in DB. 
+router.post("/",async (req, res) => {
+    const newListing = new Listing(req.body.listing);
+    await newListing.save();
+    res.redirect("/listings"); 
+  }
+);
+/*
+req.body = {
+  listing: {
+    title: "Taj Mahal",
+    price: 2000
+  }
+}
+*/
+//---
+
+
+// Step - 8: aim: Edit , Update and Delet any individual listing. (ya edit route hai)
+router.get("/:id/edit",async (req, res) => { // views/show.ejs k anker tag seh yaha request ayaga. 
+    let { id } = req.params;
+    const listing = await Listing.findById(id); // Listing DB meh jo id aya usko search karaga and uska sara detail store kr raha
+    res.render("listings/editUpdate.ejs", { listing }); // sara detail eject kr ka show kr raha hai,  
+  }
+);
+
+        // update route
+router.put("/:id",async(req, res)=>{
+  let { id } = req.params;
+  await Listing.findByIdAndUpdate(id, { ...req.body.listing });
+  res.redirect("/listings"); //   redirect kiya hai Route No: 3 per
+}); 
+       // Delete 
+router.delete("/:id",async (req, res) => {
+    let { id } = req.params;
+    let deletedListing = await Listing.findByIdAndDelete(id);
+    res.redirect("/listings");}
+);
+//--
 
 
 module.exports = router;
+

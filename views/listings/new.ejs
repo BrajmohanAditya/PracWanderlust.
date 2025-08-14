@@ -6,7 +6,7 @@
     <title>Document</title>
 </head>
 <body>
-    <!--  -->
+<!-- // step - 7 aim: creating new listing by user and jo detail aya uska link ko main page per display krna.  -->
 <div class="row">
     <div class="col-8 offset-2">
     <h3>Create a New Listing</h3>
@@ -39,16 +39,26 @@
         </div>
         </div>
 
-
         <div class="mb-3">
             <label for="location" class="form-lable">Location</label>
             <input name="listing[location]"  placeholder="enter location" type="text" class="form-control" required> 
         </div>
-        <button class="btn btn-dark">Add</button> <!-- Route No 4 run hoga or DB meh data save ho jayaga -->
-        <br><br>
+        <button class="btn btn-dark">Add</button> 
+         <br><br>
 
     </form>
     </div>
 </div>
 </body>
 </html>
+
+<!--
+listing[title]: creating key value pair , Mere form ka ye field listing object ke andar title key me store karo. 
+Ex-
+req.body = {
+  listing: {
+    title: "Taj Mahal",
+    price: 2000
+  }
+}
+-->

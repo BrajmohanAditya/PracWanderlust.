@@ -25,5 +25,17 @@
         </p>
       </div>
     </div>
+      <br/>
+    <!--Step - 8: aim: edit update and delet any individual listing. -->
+    <div class="btns mb-3">
+      <a
+        href="/listings/<%= listing.id %>/edit"
+        class="btn btn-dark col-1 offset-2"
+      >Edit</a>
+      <form method="POST" action="/listings/<%= listing.id %>?_method=DELETE">
+        <button class="btn btn-dark offset-4">Delete</button>
+      </form>
+    </div>
+    <!-- end -->
 </body>
 </html>

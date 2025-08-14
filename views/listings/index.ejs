@@ -18,7 +18,7 @@
     <!---->
 
     <div class="row row-col-lg-3">
-      <% for(let listing of allListings) { %>
+      <% for(let listing of allListings) { %>      <!--allListings(yaha sara detail aya hai routes/listing.js seh) -->
       <div class="card listing-card" style="width: 18rem">
         <a href="/listings/<%= listing._id %>" class="listing-link"> <!-- it will triger a route in routes/listing.js -->
           <img
