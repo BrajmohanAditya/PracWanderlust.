@@ -4,6 +4,9 @@ const app = express();
 const mongoose = require("mongoose"); 
 //***
 
+//step - 9: aim: to create common navbar and footer
+const ejsMate = require("ejs-mate");
+// 
 
 //aim: ejecting allListings in index.ejs   (step -- 5)
 const path = require("path");
@@ -38,9 +41,16 @@ app.set("views", path.join(__dirname, "views")); // //  sets the folder where Ex
 app.use(express.urlencoded({ extended: true }));   
 //---
 
+
+//step : 9 aim: to create common navbar, boilerplate and footer 
+app.engine('ejs', ejsMate);
+//
+
+
 app.get("/", (req, res) => {
   res.redirect("/listings"); // "/listings"  "Hi, I am root"
 });
+
 
 //jo ve request "/listings" url per ayaga redirect it to listingsRoute  (step -- 5)
 app.use("/listings", listingsRoute);
