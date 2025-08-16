@@ -2,14 +2,15 @@
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose"); 
+const path = require("path");
 //***
 
 //step - 9: aim: to create common navbar and footer
 const ejsMate = require("ejs-mate");
+app.use(express.static(path.join(__dirname, "/public"))); // css apply hoga 
 // 
 
 //aim: ejecting allListings in index.ejs   (step -- 5)
-const path = require("path");
 const listingsRoute = require("./routes/listing.js");
 //---
 
