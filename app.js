@@ -8,6 +8,7 @@ const path = require("path");
 //step - 9: aim: to create common navbar and footer
 const ejsMate = require("ejs-mate");
 app.use(express.static(path.join(__dirname, "/public"))); // css apply hoga 
+// koi v request aya usko public folder acess krna ka permission ho. isi k liya ya middlemalware likha gaya hai.
 // 
 
 //aim: ejecting allListings in index.ejs   (step -- 5)

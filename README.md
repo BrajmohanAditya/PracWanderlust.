@@ -28,7 +28,7 @@ app.get("/", (req, res) => {
 
 .post(): is use to receive  request which comes from browser. like we submit a form. 
 
-
+app.use() ek middleware ko attach karta hai, jo request-response ke beech me kaam karta hai (jaise logging, authentication, body parsing, routes handle karna, etc.).
 
 
 
