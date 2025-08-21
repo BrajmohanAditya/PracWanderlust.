@@ -3,6 +3,7 @@
 const express = require("express");
 const router = express.Router();
 const Listing = require("../models/listing.js");
+const wrapAsync = require("../utils/wrapAsync.js");
 
 //app.get("/Listing", async (req, res) => { ... })      step - 5
 router.get(     
@@ -32,12 +33,12 @@ router.get("/:id", async(req, res)=>{// Matching ke time  path ka pattern same h
 
 
 // step - 7 aim:  jo detail aya form(listings/new.ejs) k url (action="/listings") seh , save it in DB. 
-router.post("/",async (req, res) => {
-    const newListing = new Listing(req.body.listing);
-    await newListing.save();
-    res.redirect("/listings"); 
-  }
-);
+router.post("/",wrapAsync( async (req, res, next) => {
+  const newListing = new Listing(req.body.listing);
+  await newListing.save();
+  res.redirect("/listings"); // step - 11 : Adding server side validation, (wrapAsync)
+} 
+));
 /*
 req.body = {
   listing: {

@@ -43,7 +43,7 @@ app.set("views", path.join(__dirname, "views")); // //  sets the folder where Ex
 app.use(express.urlencoded({ extended: true }));   
 //---
 
-
+ 
 //step : 9 aim: to create common navbar, boilerplate and footer 
 app.engine('ejs', ejsMate);
 //
@@ -60,8 +60,14 @@ app.use("/listings", listingsRoute);
 
 
 
+app.use((err, req, res, next) => {
+  // step - 11 : Adding server side validation, error handling middle malware. 
+  console.error(err.message);
+  res.status(500).send("Something went wrong! " + err.message); // error handling middleware 
+});
 
 
-app.listen(8080, () => {
-  console.log("Listening to port 8080");
+
+app.listen(3000, () => {
+  console.log("Listening to port 3000");
 });
