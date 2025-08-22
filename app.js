@@ -59,11 +59,10 @@ app.use("/listings", listingsRoute);
 //
 
 
-
+// step - 11 : Adding server side validation, # error handling middle malware. 
 app.use((err, req, res, next) => {
-  // step - 11 : Adding server side validation, error handling middle malware. 
-  console.error(err.message);
-  res.status(500).send("Something went wrong! " + err.message); // error handling middleware 
+  let{statusCode = 500, message = "something went wrong"} = err;
+  res.render("error.ejs", {message})
 });
 
 
