@@ -31,9 +31,11 @@ const listingSchema = new Schema({
   location: String,
   country: String,
   reviews: [
+    // step: 13 - reviews schema ko listing schema meh dala hu. ager tum show route meh log krta ho toh you will get detail and reviews of
+    // that particular listing. 
     {
       type: Schema.Types.ObjectId,
-      ref: "Review",
+      ref: "Review", // we wnt ki Listings meh vi review id store raha 
     },
   ],
   owner: {

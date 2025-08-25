@@ -15,6 +15,8 @@ app.use(express.static(path.join(__dirname, "/public"))); // css apply hoga
 const listingsRoute = require("./routes/listing.js");
 //---
 
+const reviewRoute = require("./routes/review.js"); // step: 13
+
 // step: 8,  we cannot send PUT request in form, so use metovhoderide
 const methodOverride = require("method-override"); // 
 app.use(methodOverride("_method"));
@@ -55,9 +57,11 @@ app.get("/", (req, res) => {
 
 
 //jo ve request "/listings" url per ayaga redirect it to listingsRoute  (step -- 5)
-app.use("/listings", listingsRoute);
+app.use("/listings", listingsRoute);  // "listingsRoute"-  ya uper defined hai 
 //
+app.use("/listings/:id/reviews", reviewRoute);  //  step: 13 (review route ko redirect kr raha hu)
 
+ 
 
 // step - 11 : Adding server side validation, # error handling middle malware. 
 app.use((err, req, res, next) => {
@@ -65,7 +69,7 @@ app.use((err, req, res, next) => {
   res.render("error.ejs", {message})
 });
 
-
+ 
 
 app.listen(3000, () => {
   console.log("Listening to port 3000");
