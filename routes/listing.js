@@ -31,7 +31,7 @@ router.get("/new", (req, res) => {
 });
 //---
 
-//step - 6.  show route   aim: after clicking on anker tag in views/listings/index.ejs. it should show detail of that image.
+//step - 6.  (show route)   aim: after clicking on anker tag in views/listings/index.ejs. it should show detail of that image.
 router.get(
   "/:id",
   wrapAsync(async (req, res) => {
