@@ -24,8 +24,6 @@ router.post(
   validateReview,
   wrapAsync(async (req, res) => {
     // validateReview is for serverside validation
-    console.log(req.body);
-
     let listing = await Listing.findById(req.params.id);
     let newReview = new Review(req.body.review);
     listing.reviews.push(newReview._id);
@@ -37,4 +35,15 @@ router.post(
 );
 //---
 
+
+// Step-13 delete route.   // (/listings/:id/reviews)
+router.delete("/:reviewId",
+  wrapAsync(async(req, res)=>{
+    let { id, reviewId } = req.params;
+    await Listing.findByIdAndUpdate(id, { $pull: { reviews: reviewId } });
+    await Review.findByIdAndDelete(reviewId);
+    res.redirect(`/listings/${id}`);
+  })
+)
+//--
 module.exports = router;

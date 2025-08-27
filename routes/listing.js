@@ -37,11 +37,13 @@ router.get(
   wrapAsync(async (req, res) => {
     // Matching ke time  path ka pattern same hai ya nahi yahi check hota hai.
     let { id } = req.params; // req.params se URL ke :id ka value nikala ja raha hai.
-    const listing = await Listing.findById(id); // Listing :- ya DB hai, listing:- ak single listing hai
+    const listing = await Listing.findById(id).populate("reviews"); // Listing :- ya DB hai, listing:- ak single listing hai
       // console.log("Fetched Listing:", listing);
     res.render("listings/show.ejs", { listing }); //
   })
 );
+// populate("reviews"); ya use karoga tabhi reviews dikhaga otherwise nahi.  
+//.populate("reviews") → sirf review ke IDs ko actual review ke documents me badal deta hai.
 //---
 
 // step - 7 aim:  jo detail aya form(listings/new.ejs) k url (action="/listings") seh , save it in DB.
