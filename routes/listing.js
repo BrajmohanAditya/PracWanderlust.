@@ -6,7 +6,7 @@ const Listing = require("../models/listing.js");
 const wrapAsync = require("../utils/wrapAsync.js");
 const { listingSchema } = require("../schema.js"); // joi server side validation
 
-// step: 12 middleMalwere for server side validation (Listingschema ko use kr k validate karega ya middlewere)
+// step: 12 middleMalwere for server side validation (Listingschema and joi ko use kr k validate karega ya middlewere)
 const validateListing = (req, res, next) => {
   let { error } = listingSchema.validate(req.body); 
   if (error) {
