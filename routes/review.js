@@ -29,6 +29,7 @@ router.post(
     listing.reviews.push(newReview._id);
     await newReview.save();
     await listing.save();
+    req.flash("success", "Review Added"); // step- 14a
 
     res.redirect(`/listings/${listing._id}`); // ya listing  k show route ko trigger karega
   })
@@ -42,6 +43,8 @@ router.delete("/:reviewId",
     let { id, reviewId } = req.params;
     await Listing.findByIdAndUpdate(id, { $pull: { reviews: reviewId } });
     await Review.findByIdAndDelete(reviewId);
+    req.flash("success", "Review Deleted"); // step- 14a
+
     res.redirect(`/listings/${id}`);
   })
 )

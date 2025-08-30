@@ -3,14 +3,41 @@ const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
 const path = require("path");
-
-//***
+//---
 
 //step - 9: aim: to create common navbar and footer
 const ejsMate = require("ejs-mate");
 app.use(express.static(path.join(__dirname, "/public"))); // css apply hoga
 // koi v request aya usko public folder acess krna ka permission ho. isi k liya ya middlemalware likha gaya hai.
-//
+//---
+
+
+//step-14: Implementing session.(it will create session id in cookies , what you do on website will get store in session id)
+const flash = require("connect-flash");
+session = require("express-session"); 
+const sessionOptions = {
+  secret: "mysupersecretcode",
+  resave: false,
+  saveUninitialized: true,
+  cookie: {  // session id ko itna din tak store kr k rakhaga. ab 1 week tak mera id password stored rahaga no need of re-login
+    expires: Date.now() + 7 * 24 * 60 * 60 * 1000,
+    maxAge: 7 * 24 * 60 * 60 * 1000,
+    httpOnly: true,
+  },
+};
+app.use(session(sessionOptions));
+app.use(flash()); 
+
+// step-14a 
+app.use((req, res, next) => {
+  res.locals.success = req.flash("success");  // ya middlemalware hai. 
+  res.locals.error = req.flash("error");
+  next();
+})
+//--- * without session id you cannot create "flash"
+
+//---
+
 
 //aim: ejecting allListings in index.ejs   (step -- 5)
 const listingsRoute = require("./routes/listing.js");
@@ -51,6 +78,9 @@ app.use(express.json());
 //step : 9 aim: to create common navbar, boilerplate and footer
 app.engine("ejs", ejsMate);
 //
+
+
+
 
 app.get("/", (req, res) => {
   res.redirect("/listings"); // "/listings"  "Hi, I am root"

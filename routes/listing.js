@@ -6,14 +6,16 @@ const Listing = require("../models/listing.js");
 const wrapAsync = require("../utils/wrapAsync.js");
 const { listingSchema } = require("../schema.js"); // joi server side validation
 
+// step: 12 middleMalwere for server side validation (Listingschema ko use kr k validate karega ya middlewere)
 const validateListing = (req, res, next) => {
-  let { error } = listingSchema.validate(req.body); // step: 12 creating middleMalwere for server side validation
+  let { error } = listingSchema.validate(req.body); 
   if (error) {
     throw new ExpressError(400, error);
   } else {
     next();
   }
 };
+//--- 
 
 //app.get("/Listing", async (req, res) => { ... })      step - 5
 router.get(
@@ -49,15 +51,16 @@ router.get(
 // step - 7 aim:  jo detail aya form(listings/new.ejs) k url (action="/listings") seh , save it in DB.
 router.post(
   "/",
-  // validateListing, // step: 12 - implimented middlemalwere for server side validation
+  validateListing, // step: 12 - implimented middlemalwere for server side validation
   wrapAsync(async (req, res, next) => {
     const newListing = new Listing(req.body.listing);
     await newListing.save();
+    req.flash("success", "New Listing created")  // step- 14a
     res.redirect("/listings"); // step - 11 : Adding server side validation, (wrapAsync)
   })
-);
+); 
 /*
-req.body = {
+req.body = { 
   listing: {
     title: "Taj Mahal",
     price: 2000
@@ -93,9 +96,26 @@ router.delete(
   wrapAsync(async (req, res) => {
     let { id } = req.params;
     let deletedListing = await Listing.findByIdAndDelete(id);
+    req.flash("success", "New Listing Deleted"); // step- 14a
     res.redirect("/listings");
   })
 );
 //--
 
 module.exports = router;
+
+
+/*
+
+*> User form submit karta hai → /listings POST request jaata hai.
+
+*> Server req.flash("success", "New Listing created") set karta hai aur redirect /listings kar deta hai.
+
+*> Jab /listings GET request aata hai:
+
+*> Middleware chalke res.locals.success = req.flash("success") set kar deta hai.
+Ab success = ["New Listing created"] hoga.
+
+*> listings/index.ejs render hota hai aur <%= success %> me "New Listing created" print ho jaata hai.
+
+*/ 

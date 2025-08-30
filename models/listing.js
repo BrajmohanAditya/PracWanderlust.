@@ -1,6 +1,8 @@
 // listing schema 
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
+const Review = require("./review.js");
+
 const listingSchema = new Schema({
   title: {
     type: String,
@@ -44,7 +46,13 @@ const listingSchema = new Schema({
   },
 });
 
-
+//step: 13-  ab mai chahta hu ki ager listing ko delet karu toh uska ander jo v reviews hai wo review schema seh v delet hona caheya  sb delet hona chaheya. 
+listingSchema.post("findOneAndDelete", async(listing)=>{
+  if(listing){
+    await Review.deleteMany({_id:{$in: listing.reviews}});
+  }
+});
+//--
 
 const Listing = mongoose.model("Listing", listingSchema); // ("collection ka naam ", collection ka schema)
 module.exports = Listing;
