@@ -1,0 +1,109 @@
+<% layout("/layouts/boilerplate") %>
+<body>
+  <!-- // step - 7 aim: creating new listing by user and jo detail aya uska link ko main page per display krna.  -->
+  <!--// step -10 aim:  added BootsTrap validation in form(novalidate class="needs-validation"). -->
+  <div class="row">
+    <div class="col-8 offset-2">
+      <h3>Create a New Listing</h3>
+      <form
+        method="post"
+        action="/listings"
+        novalidate
+        class="needs-validation"
+        enctype="multipart/form-data"           
+      >
+      <!--Step: 20, aim: image upload, work: form ka type ko change kiya hu uper line meh-->
+
+        <!-- yaha jb add karoga toh ya ak post request action route(listings) per send karega jo ki DB meh add hoga -->
+        <div class="mb-3">
+          <label for="title" class="form-lable">Title</label>
+          <input
+            name="listing[title]"
+            placeholder="enter title"
+            type="text"
+            class="form-control"
+            required
+          />
+          <div class="valid-feedback">Title looks good!</div>
+        </div>
+
+        <div class="mb-3">
+          <label for="description" class="form-lable">Description</label>
+          <textarea
+            name="listing[description]"
+            placeholder="enter description"
+            class="form-control"
+            required
+          ></textarea>
+        </div>
+
+        <!-- <div class="mb-3">
+          <label for="image" class="form-lable">Image Link</label>
+          <input
+            name="listing[image][url]"
+            placeholder="enter image URl"
+            type="text"
+            class="form-control"
+          />
+        </div> -->
+
+        <div class="mb-3">       <!--Step: 20, aim: image upload, work: input define-->
+          <label for="image" class="form-lable"> Upload Image </label>
+          <input
+            name="listing[image]"
+            type="file"
+            class="form-control"
+          />
+        </div>
+
+        <div class="row">
+          <div class="mb-3 col-md-4">
+            <label for="price" class="form-lable">Price</label>
+            <input
+              name="listing[price]"
+              placeholder="enter price"
+              type="text"
+              class="form-control"
+              required
+            />
+          </div>
+
+          <div class="mb-3 col-md-8">
+            <label for="country" class="form-lable">Country</label>
+            <input
+              name="listing[country]"
+              placeholder="enter country"
+              type="text"
+              class="form-control"
+              required
+            />
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label for="location" class="form-lable">Location</label>
+          <input
+            name="listing[location]"
+            placeholder="enter location"
+            type="text"
+            class="form-control"
+            required
+          />
+        </div>
+        <button class="btn btn-dark">Add</button>
+        <br /><br />
+      </form>
+    </div>
+  </div>
+</body>
+
+<!--
+listing[title]: creating key value pair , Mere form ka ye field listing object ke andar title key me store karo. 
+Ex-
+req.body = {
+  listing: {
+    title: "Taj Mahal",
+    price: 2000
+  }
+}
+-->

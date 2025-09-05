@@ -1,0 +1,87 @@
+<!--aim: ejecting allListings in index.ejs, this page contains images and links  (Step-- 5)  -->
+<% layout("/layouts/boilerplate") %> 
+  <body>
+    <!-- step-7 aim: creating new listing by user and jo detail aya uska link ko main page per display krna.-->
+    <!-- <form method="Get" action="/listings/new"> 
+        <button>Create New Listing</button>   
+    </form> -->
+    <!--
+      click on url "/listings/new" -> app.js -> routes/listing.js or fir woha seh ak page render ho jayaga. 
+    -->
+    <!---->
+
+    <div class="filters">
+        <div id="filter">
+            <i class="fa-solid fa-fire"></i>
+            <p>Trending</p>
+        </div>
+        <div id="filter">
+            <i class="fa-solid fa-hotel"></i>
+            <p>Hotels</p>
+        </div>
+        <div id="filter">
+            <i class="fa-solid fa-mountain-city"></i>
+            <p>Iconic Cities</p>
+        </div>
+        <div id="filter">
+            <i class="fa-brands fa-fort-awesome"></i>
+            <p>Castles</p>
+        </div>
+        <div id="filter">
+            <i class="fa-solid fa-mountain-sun"></i>
+            <p>Mountains</p>
+        </div>
+        <div id="filter">
+            <i class="fa-solid fa-tent"></i>
+            <p>Camping</p>
+        </div>
+        <div id="filter">
+            <i class="fa-solid fa-person-swimming"></i>
+            <p>Amazing pools</p>
+        </div>
+        <div id="filter">
+            <i class="fa-solid fa-cow"></i>
+            <p>Farms</p>
+        </div>
+        <div id="filter">
+            <i class="fa-solid fa-snowflake"></i>
+            <p>Arctic</p>
+        </div>
+        <div id="filter">
+            <i class="fa-solid fa-landmark-dome"></i>
+            <p>Domes</p>
+        </div>
+        <div id="filter">
+            <i class="fa-solid fa-sailboat"></i>
+            <p>Boats</p>
+        </div>
+        <div class="form-check-reverse form-switch tax-toggle">
+            <label class="form-check-label" for="flexSwitchCheckDefault"><span>Display taxes</span></label>
+            <input class="form-check-input ms-2 me-2" type="checkbox" role="switch" id="flexSwitchCheckDefault">
+        </div>
+    </div>
+
+
+    <div class="row row-col-lg-3 ">
+      <% for(let listing of allListings) { %>      <!--allListings(yaha sara detail aya hai routes/listing.js seh) -->
+      <div class="card listing-card" style="width: 18rem">
+        <a href="/listings/<%= listing._id %>" class="listing-link"> <!-- it will triger a route in routes/listing.js -->
+          <img
+            src="<%= listing.image.url %>"
+            class="card-img-top"
+            alt="listing_image"
+            style="height: 18rem"
+          />
+          <div class="card-img-overlay"></div> <!--if you write here something it will visible on card-->
+          <div class="card-body">
+            <p class="card-text">
+              <b><%= listing.title %></b> <br />
+              ₹<%= listing.price %>
+            </p>
+          </div>
+        </a>
+      </div>
+      <% } %>
+    </div>
+  </body>
+

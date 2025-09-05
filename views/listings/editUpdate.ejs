@@ -1,0 +1,82 @@
+<!--Step - 8: aim: edit update and delet any individual listing. yeha (edit and Update dono  ho raha) -->
+<% layout("/layouts/boilerplate") %>
+
+<div class="row">
+  <div class="col-8 offset-2">
+    <h3>Edit your Listing</h3>
+    <form
+      method="POST"
+      action="/listings/<%= listing._id %>?_method=PUT"
+      novalidate
+      class="needs-validation"
+      enctype="multipart/form-data"
+    >
+      <div class="mb-3">
+        <label for="title" class="form-lable">Title</label>
+        <input
+          name="listing[title]"
+          class="form-control"
+          value="<%= listing.title %>"
+          type="text"
+          required
+        />
+      </div>
+      <!-- step:8 we cannot send PUT request in form, so use metovhoderide-->
+      <div class="mb-3">
+        <label for="description" class="form-lable">Description</label>
+        <textarea name="listing[description]" class="form-control" required>
+        <%= listing.description %> </textarea
+        >
+      </div>
+
+      <div class="mb-3"> <!--Step 20, aim: upload image, work: jo image upload kr diya hu usko new image seh replace krna-->
+        <label for="image" class="form-lable">Image</label>
+        <input
+          name="listing[image]"
+          class="form-control"
+          type="file"
+        />
+      </div>
+
+      <div class="row">
+        <div class="mb-3 col-md-4">
+          <label for="price" class="form-lable">Price</label>
+          <input
+            name="listing[price]"
+            class="form-control"
+            value="<%= listing.price %>"
+            type="number"
+            required
+            min="1"
+            required
+          />
+        </div>
+
+        <div class="mb-3 col-md-8">
+          <label for="country" class="form-lable">Country</label>
+          <input
+            name="listing[country]"
+            class="form-control"
+            value="<%= listing.country %>"
+            type="text"
+            required
+          />
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <label for="location" class="form-lable">location</label>
+        <input
+          name="listing[location]"
+          class="form-control"
+          value="<%= listing.location %>"
+          type="text"
+          required
+        />
+      </div>
+
+      <button class="btn btn-dark edit-btn">Update</button> <br /><br />
+    </form>
+  </div>
+</div>
+
