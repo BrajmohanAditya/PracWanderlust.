@@ -102,29 +102,40 @@ router.post(
     try {
       console.log("👉 req.body.listing:", req.body.listing);
       console.log("👉 req.file:", req.file);
-console.log("👉 req.user:", req.user);
+      console.log("👉 req.user:", req.user);
 
+      // Create new Listing
       const newListing = new Listing(req.body.listing);
-      console.log("👉 New Listing about to save:", newListing);
 
-
-      if (!req.file) {
-        console.log("❌ No file received in req.file");
-        throw new Error("Image upload failed – req.file missing");
+      // Image handling
+      if (req.file) {
+        newListing.image = {
+          url: req.file.path,
+          filename: req.file.filename,
+        };
+      } else {
+        // Default placeholder image
+        newListing.image = {
+          url: "https://placehold.co/600x400?text=No+Image",
+          filename: "",
+        };
+        console.log("⚠️ No file uploaded, using default image");
       }
 
-      let url = req.file.path;
-      let filename = req.file.filename;
-      newListing.image = { url, filename };
-
+      // Owner assignment
+      if (!req.user || !req.user._id) {
+        throw new Error("User not logged in. Cannot assign owner.");
+      }
       newListing.owner = req.user._id;
-      await newListing.save();
 
-      req.flash("success", "New Listing created");
+      // Save to DB
+      await newListing.save();
+      console.log("✅ Listing saved successfully:", newListing);
+
+      req.flash("success", "New Listing created successfully!");
       res.redirect("/listings");
     } catch (err) {
-       console.log("❌ Add Listing Error:", err.message);
-      console.log("❌ Add Listing Error:", err);
+      console.error("🔥 Add Listing Error:", err);
       next(err);
     }
   })
