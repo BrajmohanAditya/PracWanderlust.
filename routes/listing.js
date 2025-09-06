@@ -76,6 +76,12 @@ router.post(
     newListing.owner = req.user._id; // step;19, aim:  work: jb v ak new user create krta ho uska user name v create karo
     await newListing.save();
     req.flash("success", "New Listing created"); // step- 14a
+
+console.log("Cloudinary ENV:", process.env.CLOUD_NAME);
+console.log("Req.file:", req.file);
+console.log("Req.body:", req.body);
+
+
     res.redirect("/listings"); // step - 11 : Adding server side validation, (wrapAsync)
   })
 
@@ -94,9 +100,6 @@ req.body = {
 //---
 
 
-
-
- 
 
 // Step - 8: aim: Edit , Update and Delet any individual listing. (ya edit route hai)
 router.get(
