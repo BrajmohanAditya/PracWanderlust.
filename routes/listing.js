@@ -60,96 +60,43 @@ router.get(
 //.populate("reviews") → sirf review ke IDs ko actual review ke documents me badal deta hai.
 //---
 
-// // step - 7 aim:  jo detail aya form(listings/new.ejs) k url (action="/listings") seh , save it in DB.
-// router.post(
-//   "/",
-//   isLoggedIn,
-//   validateListing, // step: 12 - implimented middlemalwere for server side validation
-//   upload.single("listing[image]"), // <!--Step: 20, aim: image upload, work: route restructuring-->
-//   wrapAsync(async (req, res, next) => {
-//     const newListing = new Listing(req.body.listing);
-
-//     let url = req.file.path;
-//     let filename = req.file.filename;
-//     newListing.image = { url, filename };
-//     // const newListing = new Listing(req.body.listing);
-//     newListing.owner = req.user._id; // step;19, aim:  work: jb v ak new user create krta ho uska user name v create karo
-//     await newListing.save();
-//     req.flash("success", "New Listing created"); // step- 14a
-//     res.redirect("/listings"); // step - 11 : Adding server side validation, (wrapAsync)
-//   })
-
-//   // (req, res) => {
-//   //   res.send(req.file);
-//   // }
-// );
-// /*  
-// req.body = { 
-//   listing: {
-//     title: "Taj Mahal",
-//     price: 2000
-//   }
-// }
-// */
-// //---
-
+// step - 7 aim:  jo detail aya form(listings/new.ejs) k url (action="/listings") seh , save it in DB.
 router.post(
   "/",
   isLoggedIn,
-  validateListing,
-  upload.single("listing[image]"),
+  validateListing, // step: 12 - implimented middlemalwere for server side validation
+  upload.single("listing[image]"), // <!--Step: 20, aim: image upload, work: route restructuring-->
   wrapAsync(async (req, res, next) => {
-    try {
-      console.log("👉 req.body.listing:", req.body.listing);
-      console.log("👉 req.file:", req.file);
-      console.log("👉 req.user:", req.user);
+    const newListing = new Listing(req.body.listing);
 
-      // Create new Listing
-      const newListing = new Listing(req.body.listing);
-
-      // Image handling
-      if (req.file) {
-        newListing.image = {
-          url: req.file.path,
-          filename: req.file.filename,
-        };
-      } else {
-        // Default placeholder image
-        newListing.image = {
-          url: "https://placehold.co/600x400?text=No+Image",
-          filename: "",
-        };
-        console.log("⚠️ No file uploaded, using default image");
-      }
-
-      // Owner assignment
-      if (!req.user || !req.user._id) {
-        throw new Error("User not logged in. Cannot assign owner.");
-      }
-      newListing.owner = req.user._id;
-
-      // Save to DB
-      await newListing.save();
-      console.log("✅ Listing saved successfully:", newListing);
-
-      req.flash("success", "New Listing created successfully!");
-      res.redirect("/listings");
-    } catch (err) {
-      console.error("🔥 Add Listing Error:", err);
-      next(err);
-    }
+    let url = req.file.path;
+    let filename = req.file.filename;
+    newListing.image = { url, filename };
+    // const newListing = new Listing(req.body.listing);
+    newListing.owner = req.user._id; // step;19, aim:  work: jb v ak new user create krta ho uska user name v create karo
+    await newListing.save();
+    req.flash("success", "New Listing created"); // step- 14a
+    res.redirect("/listings"); // step - 11 : Adding server side validation, (wrapAsync)
   })
+
+  // (req, res) => {
+  //   res.send(req.file);
+  // }
 );
+/*  
+req.body = { 
+  listing: {
+    title: "Taj Mahal",
+    price: 2000
+  }
+}
+*/
+//---
 
 
 
 
-
-
-
-
-
-
+ 
 
 // Step - 8: aim: Edit , Update and Delet any individual listing. (ya edit route hai)
 router.get(
