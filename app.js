@@ -70,7 +70,11 @@ app.use(methodOverride("_method"));
 //---
 
 // Establishing connection to Data base ---> (Step-2)
-const MONGO_URL = "mongodb://127.0.0.1:27017/PracWonderlust";
+// const MONGO_URL = "mongodb://127.0.0.1:27017/PracWonderlust";
+const MONGO_URL = process.env.ATLASDB_URL;
+
+
+
 main()
   .then(() => {
     //  calling main method
@@ -97,7 +101,7 @@ app.use(express.json());
 //step : 9 aim: to create common navbar, boilerplate and footer
 app.engine("ejs", ejsMate);
 //
-
+ 
 
 
 
