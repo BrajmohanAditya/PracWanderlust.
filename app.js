@@ -12,7 +12,7 @@ const ejsMate = require("ejs-mate");
 app.use(express.static(path.join(__dirname, "/public"))); // css apply hoga
 // koi v request aya usko public folder acess krna ka permission ho. isi k liya ya middlemalware likha gaya hai.
 //---
-
+ 
 // step: 15 aim: signup user. 
 const passport = require("passport");
 const LocalStrategy = require("passport-local");
@@ -23,8 +23,24 @@ const userRouter = require("./routes/user.js");
 
 //step-14: Implementing session.(it will create session id in cookies , what you do on website will get store in session id)
 const flash = require("connect-flash");
-session = require("express-session"); 
+const session = require("express-session"); 
+const MongoStore = require('connect-mongo'); // step: 21 aim: permanent login raho
+
+  // step: 21 aim: permanent login raho
+const store = MongoStore.create({
+  mongoUrl: process.env.ATLASDB_URL,
+  crypto: {
+    secret: "mysupersecretcode",
+  },
+  touchAfter: 24 * 3600,
+});
+
+store.on("error", ()=>{
+  console.log("error in mongo session store", err)
+}); 
+  //---
 const sessionOptions = {
+  store,
   secret: "mysupersecretcode",
   resave: false,
   saveUninitialized: true,
@@ -34,6 +50,9 @@ const sessionOptions = {
     httpOnly: true,
   },
 };
+//------------
+
+
 app.use(session(sessionOptions));
 app.use(flash()); 
 
@@ -66,6 +85,7 @@ const reviewRoute = require("./routes/review.js"); // step: 13
 
 // step: 8,  we cannot send PUT request in form, so use metovhoderide
 const methodOverride = require("method-override"); //
+const { error } = require('console');
 app.use(methodOverride("_method"));
 //---
 

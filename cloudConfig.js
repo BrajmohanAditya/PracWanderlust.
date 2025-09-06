@@ -1,6 +1,6 @@
 // step: 20, aim: image upload
 const cloudinary = require("cloudinary").v2;
-const { CloudinaryStorage } = require("@fluidjs/multer-cloudinary");
+const { CloudinaryStorage } = require("multer-storage-cloudinary");
 const multer = require("multer");
 cloudinary.config({
   cloud_name: process.env.CLOUD_NAME,
